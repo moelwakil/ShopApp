@@ -8,7 +8,7 @@ using ShopApp.Core.Models;
 
 namespace ShopApp.DataAccess.InMemory
 {
-    class ProductRepository
+    public class ProductRepository
     {
         ObjectCache cache = MemoryCache.Default;
         List<Product> products;
@@ -38,7 +38,6 @@ namespace ShopApp.DataAccess.InMemory
             if (productToUpdate != null)
             {
                 productToUpdate = product;
-                Commit();
             } else
             {
                 throw new Exception("Product Not Found");
@@ -69,7 +68,6 @@ namespace ShopApp.DataAccess.InMemory
             if (productToDelete != null)
             {
                 products.Remove(productToDelete);
-                Commit();
             }
             else
             {
