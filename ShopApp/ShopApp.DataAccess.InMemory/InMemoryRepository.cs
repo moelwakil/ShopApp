@@ -1,4 +1,5 @@
-﻿using ShopApp.Core.Models;
+﻿using ShopApp.Core.Contracts;
+using ShopApp.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShopApp.DataAccess.InMemory
 {
-    public class InMemoryRepository <T> where T : BaseEntity
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;
@@ -36,23 +37,25 @@ namespace ShopApp.DataAccess.InMemory
 
         public void Update(T t)
         {
-            T tToUpdate = items.Find(i => i.Id == t.Id); 
+            T tToUpdate = items.Find(i => i.Id == t.Id);
             if (tToUpdate == null)
             {
                 throw new Exception(className + " Not Found");
-            } else
+            }
+            else
             {
                 tToUpdate = t;
             }
         }
 
-        public T Find (string id)
+        public T Find(string id)
         {
             T t = items.Find(i => i.Id == id);
             if (t == null)
             {
                 throw new Exception(className + " Not Found");
-            } else
+            }
+            else
             {
                 return t;
             }
@@ -63,7 +66,7 @@ namespace ShopApp.DataAccess.InMemory
             return items.AsQueryable();
         }
 
-        public void Delete (string id)
+        public void Delete(string id)
         {
             T t = items.Find(i => i.Id == id);
             if (t == null)
